@@ -99,4 +99,23 @@
              , updated_at = CURRENT_TIMESTAMP
         WHERE  id = #{userId}
     </update>
+
+    <!-- 프로필 -->
+    <select id="selectUserProfile" resultType="com.moira.smallhabitbackend.user.entity.User">
+        SELECT
+               id
+             , role
+             , status
+             , email
+             , password
+             , name
+             , nickname
+             , phone
+             , rtk
+             , last_login_at
+             , created_at
+             , updated_at
+        FROM USER
+        WHERE id = #{userId}
+    </select>
 </mapper>

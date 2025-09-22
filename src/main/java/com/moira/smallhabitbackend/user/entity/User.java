@@ -2,6 +2,7 @@ package com.moira.smallhabitbackend.user.entity;
 
 import com.moira.smallhabitbackend.global.utility.Encryptor;
 import com.moira.smallhabitbackend.user.dto.request.SignupRequest;
+import com.moira.smallhabitbackend.user.dto.response.UserProfileResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,5 +41,19 @@ public class User {
         this.lastLoginAt = null;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public UserProfileResponse toUserProfileResponse(String decryptedPhone) {
+        return new UserProfileResponse(
+                this.id,
+                this.email,
+                this.name,
+                this.nickname,
+                decryptedPhone,
+                this.role.name(),
+                this.status.name(),
+                this.lastLoginAt,
+                this.createdAt
+        );
     }
 }
