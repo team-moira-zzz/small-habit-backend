@@ -1,7 +1,9 @@
 package com.moira.smallhabitbackend.user.mapper;
 
 import com.moira.smallhabitbackend.user.entity.User;
+import com.moira.smallhabitbackend.user.entity.UserLoginHistory;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
@@ -11,4 +13,11 @@ public interface UserMapper {
     int checkNickname(String nickname);
 
     void insertUser(User user);
+
+    // 로그인
+    User selectUserByEmail(String email);
+
+    void updateUserLoginInfo(@Param("user") User user, @Param("rtk") String rtk);
+
+    void insertUserLoginHistory(UserLoginHistory userLoginHistory);
 }
