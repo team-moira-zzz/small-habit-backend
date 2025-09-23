@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moira.smallhabitbackend.book.mapper.AccountBookGroupMapper">
+    <select id="selectAccountBookGroupUserChk">
+        SELECT COUNT(user_id)
+        FROM   account_book_group_user
+        WHERE  user_id = #{userId} AND joined_at IS NOT NULL
+    </select>
+    <insert id="createAccountBookGroup" parameterType="com.moira.smallhabitbackend.book.entity.AccountBookGroup">
+        INSERT INTO account_book_group (
+               id
+             , user_id
+             , name
+             , code
+             , created_at
+             , deleted_at
+        )
+        VALUES (
+               #{id}
+             , #{userId}
+             , #{name}
+             , #{code}
+             , #{createdAt}
+             , #{deletedAt}
+        )
+    </insert>
+
+    <insert id="insertAccountBookGroupUser" parameterType="com.moira.smallhabitbackend.book.entity.AccountBookGroupUser">
+        INSERT INTO account_book_group_user (
+               group_id
+             , user_id
+             , joined_at
+             , left_at
+        )
+        VALUES (
+               #{groupId}
+             , #{userId}
+             , #{joinedAt}
+             , #{leftAt}
+        )
+    </insert>
+</mapper>
