@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.smallhabitbackend.book.mapper.AccountBookGroupMapper">
+    <!-- 그룹 정보 조회 -->
+    <select id="selectAccountBookGroup" resultType="com.moira.smallhabitbackend.book.dto.response.AccountBookGroupResponse">
+        SELECT
+               id
+             , user_id
+             , name
+             , created_at
+        FROM account_book_group
+        WHERE id = (SELECT group_id FROM account_book_group_user WHERE user_id = #{userId})
+    </select>
+
+    <select id="selectAccountBookGroupUser" resultType="com.moira.smallhabitbackend.book.dto.response.AccountBookGroupUserResponse">
+        SELECT
+               A.user_id
+             , B.nickname
+             , A.joined_at
+        FROM account_book_group_user A
+        INNER JOIN user B
+        ON B.id = A.user_id
+        WHERE A.group_id = #{groupId}
+    </select>
+
+    <!-- 그룹 생성 및 가입 -->
     <select id="selectAccountBookGroupUserChk">
         SELECT COUNT(user_id)
         FROM   account_book_group_user
         WHERE  user_id = #{userId} AND joined_at IS NOT NULL
     </select>
+
     <insert id="createAccountBookGroup" parameterType="com.moira.smallhabitbackend.book.entity.AccountBookGroup">
         INSERT INTO account_book_group (
                id
