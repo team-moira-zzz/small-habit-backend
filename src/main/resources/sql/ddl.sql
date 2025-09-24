@@ -46,3 +46,20 @@ CREATE TABLE account_book_group_user
     FOREIGN KEY (group_id) REFERENCES account_book_group (id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE account_book_entry
+(
+    id            VARCHAR(36) PRIMARY KEY NOT NULL,
+    user_id       VARCHAR(36)             NOT NULL,
+    group_id      VARCHAR(36)             NOT NULL,
+    content       VARCHAR(255)            NOT NULL,
+    description   VARCHAR(255),
+    price         DECIMAL(15, 2)          NOT NULL,
+    date          DATE                    NOT NULL,
+    type          ENUM('INCOME', 'EXPENSE') NOT NULL,
+    category      ENUM('REGULAR', 'GENERAL') NOT NULL,
+    method        ENUM('CREDIT_CARD', 'DEBIT_CARD', 'CASH') NOT NULL,
+    created_at    TIMESTAMP               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES account_book_group (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
