@@ -12,6 +12,8 @@ public interface UserMapper {
 
     int checkNickname(String nickname);
 
+    int checkPhone(String phone);
+
     void insertUser(User user);
 
     // 로그인
@@ -23,7 +25,7 @@ public interface UserMapper {
 
     // 로그아웃
     void updateUserLogoutInfo(String userId);
-    
+
     // 프로필
     User selectUserProfile(String userId);
 }

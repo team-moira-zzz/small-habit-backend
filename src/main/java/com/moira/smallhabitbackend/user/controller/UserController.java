@@ -64,6 +64,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+    @GetMapping("/signup/check/phone")
+    ResponseEntity<Object> checkPhone(@RequestParam String phone) {
+        signupService.checkPhone(phone);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
     @PostMapping("/signup")
     ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
         signupService.signup(signupRequest);

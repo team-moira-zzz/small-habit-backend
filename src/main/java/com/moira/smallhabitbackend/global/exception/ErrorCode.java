@@ -18,7 +18,8 @@ public enum ErrorCode {
     INVALID_PHONE("U008", "전화번호 형식이 올바르지 않습니다. (예: 01012345678)"),
     USING_EMAIL("U009", "이미 사용중인 이메일입니다."),
     USING_NICKNAME("U010", "이미 사용중인 닉네임입니다."),
-    NOT_FOUND_USER("U011", "올바르지 않은 이메일 혹은 비밀번호입니다."),
+    USING_PHONE("U011", "이미 사용중인 휴대폰번호입니다."),
+    NOT_FOUND_USER("U012", "올바르지 않은 이메일 혹은 비밀번호입니다."),
 
     // 권한 관련 에러코드
     INVALID_AUTHORIZATION_HEADER("A001", "Authorization 헤더에 토큰 정보가 포함되어 있지 않습니다."),

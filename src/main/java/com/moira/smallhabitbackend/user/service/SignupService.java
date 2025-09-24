@@ -59,7 +59,7 @@ public class SignupService {
             throw new HabitUserException(ErrorCode.INVALID_PASSWORD, HttpStatus.BAD_REQUEST);
         }
 
-        // 3. 전화번호 형식 체크
+        // 3. 휴대폰번호 형식 체크
         if (!PHONE_PATTERN.matcher(request.phone()).matches()) {
             throw new HabitUserException(ErrorCode.INVALID_PHONE, HttpStatus.BAD_REQUEST);
         }
@@ -67,21 +67,48 @@ public class SignupService {
 
     @Transactional(readOnly = true)
     public void checkNickname(String nickname) {
-        // 닉네임 존재 여부 확인
-        int result = userMapper.checkNickname(nickname);
+        // 닉네임 형식 확인
+        if (!StringUtils.hasText(nickname)) {
+            throw new HabitUserException(ErrorCode.NO_NICKNAME, HttpStatus.BAD_REQUEST);
+        }
 
-        if (result > 0) {
+        // 닉네임 존재 여부 확인
+        if (userMapper.checkNickname(nickname) > 0) {
             throw new HabitUserException(ErrorCode.USING_NICKNAME, HttpStatus.BAD_REQUEST);
         }
     }
 
     @Transactional(readOnly = true)
     public void checkEmail(String email) {
-        // 이메일 존재 여부 확인
-        int result = userMapper.checkEmail(email);
+        // 이메일 형식 확인
+        if (!StringUtils.hasText(email)) {
+            throw new HabitUserException(ErrorCode.NO_EMAIL, HttpStatus.BAD_REQUEST);
+        }
 
-        if (result > 0) {
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            throw new HabitUserException(ErrorCode.INVALID_EMAIL, HttpStatus.BAD_REQUEST);
+        }
+
+        // 이메일 존재 여부 확인
+        if (userMapper.checkEmail(email) > 0) {
             throw new HabitUserException(ErrorCode.USING_EMAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public void checkPhone(String phone) {
+        // 휴대폰 형식 확인
+        if (!StringUtils.hasText(phone)) {
+            throw new HabitUserException(ErrorCode.NO_PHONE, HttpStatus.BAD_REQUEST);
+        }
+
+        if (!PHONE_PATTERN.matcher(phone).matches()) {
+            throw new HabitUserException(ErrorCode.INVALID_PHONE, HttpStatus.BAD_REQUEST);
+        }
+
+        // 휴대폰 존재 여부 확인
+        if (userMapper.checkPhone(encryptor.encrypt(phone)) > 0) {
+            throw new HabitUserException(ErrorCode.USING_PHONE, HttpStatus.BAD_REQUEST);
         }
     }
 
